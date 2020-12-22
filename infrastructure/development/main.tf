@@ -17,7 +17,7 @@ variable "bastion_security_group" {
   default = "sg-073fee129434a7e0c"
 }
 
-resource "aws_security_group" "council-tax-bill-plan-b" {
+resource "aws_security_group" "council_tax_bill_plan_b" {
   name        = "council-tax-bill-plan-b"
   description = "Allow bastion access to db"
   vpc_id      = var.api_vpc_id
