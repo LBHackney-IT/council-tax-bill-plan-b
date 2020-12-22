@@ -8,7 +8,8 @@ variable "api_vpc_cidr" {
 
 variable "api_subnets" {
   default = [
-    "subnet-01f5294cc9f85669e"
+    "subnet-000b89c249f12a8ad",
+    "subnet-0deabb5d8fb9c3446"
   ]
 }
 
