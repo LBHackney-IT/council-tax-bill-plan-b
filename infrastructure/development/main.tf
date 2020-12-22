@@ -50,3 +50,29 @@ resource "aws_security_group" "council_tax_bill_plan_b" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
+
+module "database" {
+  source  = "terraform-aws-modules/rds-aurora/aws"
+  version = "~> 2.0"
+
+  name                            = "council-tax-bill-plan-b"
+
+  engine                          = "aurora-postgresql"
+  engine_version                  = "11.9"
+
+  vpc_id                          = var.api_vpc_id
+  subnets                         = var.api_subnets
+
+  replica_count                   = 1
+  allowed_security_groups         = [aws_security_group.council_tax_bill_plan_b.id]
+  allowed_cidr_blocks             = [var.api_vpc_cidr]
+  instance_type                   = "db.t3.medium"
+  storage_encrypted               = true
+  apply_immediately               = true
+  monitoring_interval             = 10
+
+  #db_parameter_group_name         = "default"
+  #db_cluster_parameter_group_name = "default"
+
+  enabled_cloudwatch_logs_exports = ["postgresql"]
+}
