@@ -84,25 +84,25 @@ module "database" {
 }
 
 resource "aws_ssm_parameter" "database_host" {
-  name = "/council-tax-plan-b/${var.stage}/database_host"
+  name = "/council-tax-plan-b/${var.stage}/database-host"
   type = "String"
   value = module.database.this_rds_cluster_endpoint
 }
 
 resource "aws_ssm_parameter" "database_port" {
-  name = "/council-tax-plan-b/${var.stage}/database_port"
+  name = "/council-tax-plan-b/${var.stage}/database-port"
   type = "String"
   value = module.database.this_rds_cluster_port
 }
 
 resource "aws_ssm_parameter" "database_master_username" {
-  name = "/council-tax-plan-b/${var.stage}/database_master_username"
+  name = "/council-tax-plan-b/${var.stage}/database-master-username"
   type = "String"
   value = module.database.this_rds_cluster_master_username
 }
 
 resource "aws_ssm_parameter" "database_master_password" {
-  name = "/council-tax-plan-b/${var.stage}/database_master_password"
+  name = "/council-tax-plan-b/${var.stage}/database-master-password"
   type = "SecureString"
   value = module.database.this_rds_cluster_master_password
 }
