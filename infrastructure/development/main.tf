@@ -8,3 +8,18 @@ module "all-resources" {
   ]
   bastion_security_group = "sg-073fee129434a7e0c"
 }
+
+output "database_port" {
+  value = module.all-resources.database_port
+}
+output "database_host" {
+  value = module.all-resources.database_host
+}
+output "database_username" {
+  value = module.all-resources.database_username
+}
+output "database_password" {
+  value = module.all-resources.database_password
+  sensitive = true
+}
+
