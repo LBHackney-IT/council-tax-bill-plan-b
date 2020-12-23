@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+
+stage=$1
+
+if [ -z "$stage" ]
+then
+    echo "You must provide a stage"
+    exit 1
+fi
+
+identity_file="$HOME/.ssh/hackney_jumpbox_$stage.pem"
+
+if [ ! -f "$identity_file" ]
+then
+    mkdir -p "$(dirname "$identity_file")" || 1
+    aws ssm get-parameter --output text --query Parameter.Value --name "/platform-apis-jump-box-pem-key" > "$identity_file"
+    chmod 600 "$identity_file"
+fi
+
+project_name="council-tax-plan-b"
+
+HOST="$(aws ssm get-parameter --output text --query Parameter.Value --name /${project_name}/${stage}/database-host)"
+PORT="$(aws ssm get-parameter --output text --query Parameter.Value --name /${project_name}/${stage}/database-port)"
+
+JUMPBOX_INSTANCE=$(aws ssm get-parameter --output text --query Parameter.Value --name platform-apis-jump-box-instance-name)
+
+export PGHOST=localhost
+export PGPORT="$PORT"
+export PGUSER="$(aws ssm get-parameter --output text --query Parameter.Value --name /${project_name}/${stage}/database-master-username)"
+export PGPASSWORD="$(aws ssm get-parameter --output text --query Parameter.Value --name /${project_name}/${stage}/database-master-password --with-decryption)"
+
+ssh -4 \
+  -i "$identity_file" \
+  -Nf \
+  -M \
+  -L "$PORT:$HOST:$PORT" \
+  -o "UserKnownHostsFile=/dev/null" \
+  -o "StrictHostKeyChecking=no" \
+  -o ExitOnForwardFailure=yes \
+  -o ProxyCommand="aws ssm start-session --target %h --document AWS-StartSSHSession --parameters portNumber=%p --region=eu-west-2" \
+  "ec2-user@$JUMPBOX_INSTANCE"
+
+if [[ $? == 0 ]]
+then
+    echo "Tunnel opened successfully."
+else
+    echo "Tunnel failed to open."
+fi
