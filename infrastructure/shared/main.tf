@@ -1,3 +1,8 @@
+variable "stage" {
+  type = string
+  description = "The stage of the pipline: devscratch, development, staging, production"
+}
+
 variable "api_vpc_id" {
   type = string
   description = "The VPC ID"
@@ -76,6 +81,30 @@ module "database" {
   #db_cluster_parameter_group_name = "default"
 
   enabled_cloudwatch_logs_exports = ["postgresql"]
+}
+
+resource "aws_ssm_parameter" "database_host" {
+  name = "/council-tax-plan-b/${var.stage}/database_host"
+  type = "String"
+  value = module.database.this_rds_cluster_endpoint
+}
+
+resource "aws_ssm_parameter" "database_port" {
+  name = "/council-tax-plan-b/${var.stage}/database_port"
+  type = "String"
+  value = module.database.this_rds_cluster_port
+}
+
+resource "aws_ssm_parameter" "database_master_username" {
+  name = "/council-tax-plan-b/${var.stage}/database_master_username"
+  type = "String"
+  value = module.database.this_rds_cluster_master_username
+}
+
+resource "aws_ssm_parameter" "database_master_password" {
+  name = "/council-tax-plan-b/${var.stage}/database_master_password"
+  type = "SecureString"
+  value = module.database.this_rds_cluster_master_password
 }
 
 output "database_host" {

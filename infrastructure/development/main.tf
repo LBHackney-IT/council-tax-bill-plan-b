@@ -1,5 +1,7 @@
 module "all-resources" {
   source = "../shared"
+
+  stage = "development"
   api_vpc_id = "vpc-0662f3f3759795b33"
   api_vpc_cidr = "10.120.6.0/24"
   api_subnets = [

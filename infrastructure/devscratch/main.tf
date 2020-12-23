@@ -1,5 +1,7 @@
 module "all-resources" {
   source = "../shared"
+
+  stage = "devscratch"
   api_vpc_id = "vpc-0e81f3bdc6ee6ec6e"
   api_vpc_cidr = "10.120.12.0/24"
   api_subnets = [
