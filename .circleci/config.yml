@@ -43,14 +43,14 @@ commands:
       - *attach_workspace
       - checkout
       - run:
-          name: format get and init
+          name: Format code and initialise Terraform
           command: |
             cd infrastructure/<<parameters.stage>>
             terraform fmt
             terraform get -update=true
             terraform init
       - run:
-          name: apply
+          name: Apply infrastructure changes
           command: |
             cd infrastructure/<<parameters.stage>>
             terraform apply -auto-approve
