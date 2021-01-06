@@ -68,10 +68,10 @@ with open(file_to_parse, encoding="ISO-8859-1") as fp:
 
     with open(output_sql_file_name, 'w', newline='\n') as sqlfile:
 
-        for record in records:
+        for record in records[1:]:
           account_num = record[0]
           premium = record[1]
 
           sql = f"UPDATE fdm_mail_data_march SET premium = '{premium}' WHERE account_number = '{account_num}';"
-          print(sql)
+          sqlfile.write(f'{sql}\n')
 
