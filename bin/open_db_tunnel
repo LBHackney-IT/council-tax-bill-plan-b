@@ -25,7 +25,7 @@ PORT="$(aws ssm get-parameter --output text --query Parameter.Value --name /${pr
 JUMPBOX_INSTANCE=$(aws ssm get-parameter --output text --query Parameter.Value --name platform-apis-jump-box-instance-name)
 
 export PGHOST=localhost
-export PGPORT="$PORT"
+export PGPORT="5433"
 export PGUSER="$(aws ssm get-parameter --output text --query Parameter.Value --name /${project_name}/${stage}/database-master-username)"
 export PGPASSWORD="$(aws ssm get-parameter --output text --query Parameter.Value --name /${project_name}/${stage}/database-master-password --with-decryption)"
 
@@ -33,7 +33,7 @@ ssh -4 \
   -i "$identity_file" \
   -Nf \
   -M \
-  -L "$PORT:$HOST:$PORT" \
+  -L "$PGPORT:$HOST:$PORT" \
   -o "UserKnownHostsFile=/dev/null" \
   -o "StrictHostKeyChecking=no" \
   -o ExitOnForwardFailure=yes \
