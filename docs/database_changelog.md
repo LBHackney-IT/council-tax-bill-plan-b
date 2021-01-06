@@ -5,10 +5,10 @@
 ### Added
 
 - AWS Academy recovery backup (October 2020) -> `aws_academy_recovered_october` without the following columns which were either all the same value, duplicated, empty or null:
-  - `live_ind_from_cooccupancy`
-  - `equal_SOMETHING`
-  - `equal_SOMETHING`
-  - `equal_SOMETHING`
+  - `live_ind from ctoccupancy`
+  - `equal_access_code`
+  - `sched_code`
+  - `person_status`
   - `transmission_date`
   - `for_addr_verified`
   - `prohibit_code`
