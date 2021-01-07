@@ -1,6 +1,18 @@
 # Database changelog
 
-## Wednesday 6th January 2021
+## Thursday 7th January 2021
+
+### Added
+
+- Exemption reasons -> `exemption_reasons`
+- VO data (January 2021) -> `valuation_office_bands`
+- Direct debit discrepancies -> `direct_debit_discrepancies`
+
+### Updated
+
+- FDM mail exemptions with exemption class using new data extractor script -> `exemption_class`
+
+## Wednesday 6th January 2021å
 
 ### Updated
 
