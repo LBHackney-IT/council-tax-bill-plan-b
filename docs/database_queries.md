@@ -15,14 +15,29 @@ FROM (
 
 ```sql
 SELECT
-  aws_academy_recovered_october.account_ref AS account_no,
-  CONCAT(aws_academy_recovered_october.lead_liable_name, ' ', aws_academy_recovered_october.lead_liable_lastname) AS name,
-  CONCAT(aws_academy_recovered_october.for_addr1, ', ', aws_academy_recovered_october.for_addr2, ', ', aws_academy_recovered_october.for_addr3, ', ', aws_academy_recovered_october.for_addr4, ', ', aws_academy_recovered_october.for_postcode) AS forwarding_address,
-  CONCAT(aws_academy_recovered_october.addr1, ', ', aws_academy_recovered_october.addr2, ', ', aws_academy_recovered_october.addr3, ', ', aws_academy_recovered_october.addr4, ', ', aws_academy_recovered_october.postcode) AS property_address,
-  aws_academy_recovered_october.vo_band AS vo_band
-FROM aws_academy_recovered_october;
+  aws.mail_merge_reference AS mail_merge_reference,
+  CONCAT(aws.lead_liable_name, ' ', aws.lead_liable_lastname) AS name,
+  CONCAT(aws.for_addr1, ', ', aws.for_addr2, ', ', aws.for_addr3, ', ', aws.for_addr4, ', ', aws.for_postcode) AS forwarding_address,
+  CONCAT(aws.addr1, ', ', aws.addr2, ', ', aws.addr3, ', ', aws.addr4, ', ', aws.postcode) AS property_address,
+  aws.vo_band AS vo_band,
+  coalesce(fdm.additional_names, fdm_exemptions.additional_names) AS additional_names,
+  fdm.discount_1 AS discount_1,
+  fdm.discount_2 AS discount_2,
+  fdm.reduction AS reduction,
+  aws.payment_method_code AS payment_method_code,
+  fdm_exemptions.exemption_class AS exemption_class,
+  exemption_reasons.reason AS exemption_reason,
+  aws.property_ref as property_ref
+FROM aws_academy_recovered_october AS aws
+LEFT JOIN fdm_mail_data_march AS fdm
+ON aws.mail_merge_reference = fdm.account_number
+LEFT JOIN fdm_mail_exemptions_march AS fdm_exemptions
+ON aws.mail_merge_reference = fdm_exemptions.account_number
+LEFT JOIN exemption_reasons
+ON exemption_reasons.class = fdm_exemptions.exemption_class;
 
--- Returns 117,665 records.
+
+-- Returns 119,036 records.
 ```
 
 ## Get properties with VO band in AWS table different in VOB table
