@@ -12,7 +12,7 @@
 
 - FDM mail exemptions with exemption class using new data extractor script -> `exemption_class`
 
-## Wednesday 6th January 2021å
+## Wednesday 6th January 2021
 
 ### Updated
 
