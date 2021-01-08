@@ -1,6 +1,5 @@
 from diagrams import Diagram
 from diagrams.aws.database import Aurora
-from diagrams.generic.database import SQL
 from diagrams.generic.storage import Storage
 
 graph_attr = {
