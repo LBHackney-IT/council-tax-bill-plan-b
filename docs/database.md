@@ -8,6 +8,7 @@
   To modify this diagram:
 
   1. Update high_level_diagram.py
-  2. Run `python high_level_diagram.py`
-  3. Commit the updated image
+  2. Change directory into /docs so the new image replaces the current one
+  3. Run `python high_level_diagram.py`
+  4. Commit the updated image
 -->
