@@ -24,24 +24,18 @@ See [FDM Data Extractor Script](data_scripts/FDM_DATA_EXTRACTOR.md).
 The [high-level diagram](./docs/high_level_diagram.png) is generated using [Diagrams by mingrammer](https://diagrams.mingrammer.com/) which allows you to create diagrams by writing Python code.
 
 1. Install diagrams
-
 ```bash
 $ pip install diagrams
 ```
-
 2. Update [high_level_diagram.py](./docs/high_level_diagram.py) (see [Diagrams' documentation](https://diagrams.mingrammer.com/docs/guides/diagram))
-3. Change directory into /docs so the new image replaces the current one
-
+3. Change directory into `/docs` so the new image replaces the current one
 ```bash
 $ cd docs
 ```
-
 4. Run the script to generate the diagram
-
 ```bash
 $ python high_level_diagram.py
 ```
-
 5. Commit the updated image
 
 ## Documentation
