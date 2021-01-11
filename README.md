@@ -13,7 +13,7 @@
 
 ### Data extraction scripts
 
-See [FDM Data Extractor Script](data_scripts/FDM_DATA_EXTRACTOR.md).
+See [FDM Data Extractors](data_scripts/FDM_DATA_EXTRACTORS.md).
 
 ### Infrastructure
 
