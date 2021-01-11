@@ -36,7 +36,7 @@ $ cd docs
 ```bash
 $ python high_level_diagram.py
 ```
-5. Commit the updated image
+5. Commit the updated image and Python script
 
 ## Documentation
 
