@@ -7,7 +7,7 @@ graph_attr = {
 }
 
 with Diagram("Hackney Council Tax Billing Plan B", show=True, direction="TB", graph_attr=graph_attr, filename="high_level_diagram"):
-    Aurora("POC Data") >> [
+    Aurora("POC Data") << [
         Storage("AWS Academy Recovery\n(October 2020)"),
         Storage("FDM Bill Print Files\n(March 2020)"),
         Storage("FDM Exemption Print Files\n(March 2020)"),
