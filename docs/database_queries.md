@@ -92,3 +92,13 @@ FROM ctax_billing_dumb_v1 AS main
 JOIN fdm_mail_data AS fdm
 ON main.mail_merge_reference = fdm.account_number AND fdm.discount_1 IS NOT NULL;
 ```
+
+## Get all accounts without a reason to exclude
+
+```sql
+SELECT main.id, main.mail_merge_reference, account_exclusions.exclusion_reasons_id
+FROM aws_academy_recovered_october AS main
+LEFT JOIN account_exclusions
+ON main.id = account_exclusions.aws_academy_recovered_october_id
+WHERE account_exclusions.exclusion_reasons_id IS NULL;
+```
