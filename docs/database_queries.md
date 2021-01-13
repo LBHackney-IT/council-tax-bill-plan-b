@@ -102,3 +102,11 @@ LEFT JOIN account_exclusions
 ON main.id = account_exclusions.aws_academy_recovered_october_id
 WHERE account_exclusions.exclusion_reasons_id IS NULL;
 ```
+
+## Get all working age reductions not in FDM mail data
+
+```sql
+SELECT DISTINCT(working_age_ctr_august.ctax_ref)
+FROM working_age_ctr_august
+WHERE working_age_ctr_august.ctax_ref NOT IN (SELECT fdm_mail_data_march.account_number FROM fdm_mail_data_march WHERE fdm_mail_data_march.reduction IS NOT NULL);
+```
