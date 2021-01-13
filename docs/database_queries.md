@@ -122,6 +122,8 @@ ON main.mail_merge_reference = fdm.account_number AND fdm.reduction IS NOT NULL;
 
 ## Get all bills without CTRS (Uses unique accounts from combination of working age CTR data and FDM CTR data) and with recent DD charges
 
+<!-- DD PAYER 100% LIABILITY NO RET DD'S NO ADDACS NO DISCOUNTS NO EXEMPTIONS NO CTR LAST DD PAYMENT +/- £5 GROSS DEBIT (20/21)  -->
+
 ```sql
 SELECT
   aws.mail_merge_reference AS mail_merge_reference,
@@ -136,7 +138,8 @@ SELECT
   aws.payment_method_code AS payment_method_code,
   fdm_exemptions.exemption_class AS exemption_class,
   exemption_reasons.reason AS exemption_reason,
-  aws.property_ref as property_ref
+  aws.property_ref as property_ref,
+  ddd."20_21_gross_debit_12_instalments" as instalment
 FROM aws_academy_recovered_october AS aws
 LEFT JOIN fdm_mail_data_march AS fdm
 ON aws.mail_merge_reference = fdm.account_number
@@ -152,5 +155,11 @@ JOIN fdm_mail_data_march AS fdm
 ON main.mail_merge_reference = fdm.account_number AND fdm.reduction IS NOT NULL UNION SELECT DISTINCT(working_age_ctr_august.ctax_ref)
 FROM working_age_ctr_august
 WHERE working_age_ctr_august.ctax_ref NOT IN (SELECT fdm_mail_data_march.account_number FROM fdm_mail_data_march WHERE fdm_mail_data_march.reduction IS NOT NULL))
-AND payment_method_code LIKE 'DD%' AND ddd.direct_debit_taken > 0;
+	AND payment_method_code LIKE 'DD%'
+	AND ddd.direct_debit_taken > 0
+	AND ddd.diff_dd_gross_charge_value BETWEEN -5.00
+	AND 5.00 AND ddd.returned_dd_not_by_addacs = '#N/A'
+	AND ddd.addacs = '#N/A'
+	AND discount_1 IS NULL
+	AND exemption_class IS NULL;
 ```
