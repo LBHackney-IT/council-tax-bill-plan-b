@@ -110,3 +110,12 @@ SELECT DISTINCT(working_age_ctr_august.ctax_ref)
 FROM working_age_ctr_august
 WHERE working_age_ctr_august.ctax_ref NOT IN (SELECT fdm_mail_data_march.account_number FROM fdm_mail_data_march WHERE fdm_mail_data_march.reduction IS NOT NULL);
 ```
+
+## Get all bills without CTR
+
+```sql
+SELECT main.id, fdm.reduction
+FROM aws_academy_recovered_october AS main
+JOIN fdm_mail_data_march AS fdm
+ON main.mail_merge_reference = fdm.account_number AND fdm.reduction IS NOT NULL;
+```
