@@ -81,6 +81,17 @@ data.
 $ python /data_scripts/fdm_premium_extractor.py
 ```
 
+## Death Reports PDF extractor
+
+This script takes the data provided on people who have died recently and parses the PDFs provided into a pipe (|) separated CSV file.  Pipe (|) was chosen as inconsistency in addresses with and without commas makes it easier to just use a pipe (|).
+
+### Usage
+
+1. Run the script with 2 parameters, the full path to the input PDF and the path you want to output the file to.
+```bash
+$ python /data_scripts/death_reports_pdf_extractor.py "/Full/Path/To/data.pdf" "Full/Path/To/output.csv"
+```
+
 ## Note
 
 We're not proud of these scripts, it's brittle, untested and basically cobbled together using trial and error. Improvements could be made by mapping data to a dict instead of appending directly to the `record` however this wasn't straight forward for a couple reasons but should be possible. Ideally convert to a command line tool to run the data extracts, but with luck this is going to be a one time use bit of code.
