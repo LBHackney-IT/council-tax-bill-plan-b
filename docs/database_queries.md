@@ -111,11 +111,43 @@ FROM working_age_ctr_august
 WHERE working_age_ctr_august.ctax_ref NOT IN (SELECT fdm_mail_data_march.account_number FROM fdm_mail_data_march WHERE fdm_mail_data_march.reduction IS NOT NULL);
 ```
 
-## Get all bills without CTR
+## Get all bills with CTRs
 
 ```sql
 SELECT main.id, fdm.reduction
 FROM aws_academy_recovered_october AS main
 JOIN fdm_mail_data_march AS fdm
 ON main.mail_merge_reference = fdm.account_number AND fdm.reduction IS NOT NULL;
+```
+
+## Get all bills without CTRS (Uses unique accounts from combination of working age CTR data and FDM CTR data)
+
+```sql
+SELECT
+  aws.mail_merge_reference AS mail_merge_reference,
+  CONCAT(aws.lead_liable_name, ' ', aws.lead_liable_lastname) AS name,
+  CONCAT(aws.for_addr1, ', ', aws.for_addr2, ', ', aws.for_addr3, ', ', aws.for_addr4, ', ', aws.for_postcode) AS forwarding_address,
+  CONCAT(aws.addr1, ', ', aws.addr2, ', ', aws.addr3, ', ', aws.addr4, ', ', aws.postcode) AS property_address,
+  aws.vo_band AS vo_band,
+  coalesce(fdm.additional_names, fdm_exemptions.additional_names) AS additional_names,
+  fdm.discount_1 AS discount_1,
+  fdm.discount_2 AS discount_2,
+  fdm.reduction AS reduction,
+  aws.payment_method_code AS payment_method_code,
+  fdm_exemptions.exemption_class AS exemption_class,
+  exemption_reasons.reason AS exemption_reason,
+  aws.property_ref as property_ref
+FROM aws_academy_recovered_october AS aws
+LEFT JOIN fdm_mail_data_march AS fdm
+ON aws.mail_merge_reference = fdm.account_number
+LEFT JOIN fdm_mail_exemptions_march AS fdm_exemptions
+ON aws.mail_merge_reference = fdm_exemptions.account_number
+LEFT JOIN exemption_reasons
+ON exemption_reasons.class = fdm_exemptions.exemption_class
+WHERE aws.mail_merge_reference NOT IN (SELECT main.mail_merge_reference
+FROM aws_academy_recovered_october AS main
+JOIN fdm_mail_data_march AS fdm
+ON main.mail_merge_reference = fdm.account_number AND fdm.reduction IS NOT NULL UNION SELECT DISTINCT(working_age_ctr_august.ctax_ref)
+FROM working_age_ctr_august
+WHERE working_age_ctr_august.ctax_ref NOT IN (SELECT fdm_mail_data_march.account_number FROM fdm_mail_data_march WHERE fdm_mail_data_march.reduction IS NOT NULL));
 ```
