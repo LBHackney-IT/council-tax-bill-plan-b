@@ -120,7 +120,44 @@ JOIN fdm_mail_data_march AS fdm
 ON main.mail_merge_reference = fdm.account_number AND fdm.reduction IS NOT NULL;
 ```
 
-## Get all bills without CTRS (Uses unique accounts from combination of working age CTR data and FDM CTR data) and with recent DD charges
+## Get all bills without CTRS
+
+Exclude all unique CTR cases after combining 'working age' CTR data and 'FDM Mail' CTR data:
+
+```sql
+SELECT
+  aws.mail_merge_reference AS mail_merge_reference,
+  CONCAT(aws.lead_liable_name, ' ', aws.lead_liable_lastname) AS name,
+  CONCAT(aws.for_addr1, ', ', aws.for_addr2, ', ', aws.for_addr3, ', ', aws.for_addr4, ', ', aws.for_postcode) AS forwarding_address,
+  CONCAT(aws.addr1, ', ', aws.addr2, ', ', aws.addr3, ', ', aws.addr4, ', ', aws.postcode) AS property_address,
+  aws.vo_band AS vo_band,
+  coalesce(fdm.additional_names, fdm_exemptions.additional_names) AS additional_names,
+  fdm.discount_1 AS discount_1,
+  fdm.discount_2 AS discount_2,
+  fdm.reduction AS reduction,
+  aws.payment_method_code AS payment_method_code,
+  fdm_exemptions.exemption_class AS exemption_class,
+  exemption_reasons.reason AS exemption_reason,
+  aws.property_ref as property_ref,
+  ddd."20_21_gross_debit_12_instalments" as instalment
+FROM aws_academy_recovered_october AS aws
+LEFT JOIN fdm_mail_data_march AS fdm
+ON aws.mail_merge_reference = fdm.account_number
+LEFT JOIN fdm_mail_exemptions_march AS fdm_exemptions
+ON aws.mail_merge_reference = fdm_exemptions.account_number
+LEFT JOIN exemption_reasons
+ON exemption_reasons.class = fdm_exemptions.exemption_class
+LEFT JOIN direct_debit_discrepancies AS ddd
+ON ddd.mail_merge_reference = aws.mail_merge_reference
+WHERE aws.mail_merge_reference NOT IN (SELECT main.mail_merge_reference
+FROM aws_academy_recovered_october AS main
+JOIN fdm_mail_data_march AS fdm
+ON main.mail_merge_reference = fdm.account_number AND fdm.reduction IS NOT NULL UNION SELECT DISTINCT(working_age_ctr_august.ctax_ref)
+FROM working_age_ctr_august
+WHERE working_age_ctr_august.ctax_ref NOT IN (SELECT fdm_mail_data_march.account_number FROM fdm_mail_data_march WHERE fdm_mail_data_march.reduction IS NOT NULL));
+```
+
+### Get all Non CTRS bills for Direct Debit Payers with 100% Liability
 
 <!-- DD PAYER 100% LIABILITY NO RET DD'S NO ADDACS NO DISCOUNTS NO EXEMPTIONS NO CTR LAST DD PAYMENT +/- £5 GROSS DEBIT (20/21)  -->
 
@@ -155,11 +192,99 @@ JOIN fdm_mail_data_march AS fdm
 ON main.mail_merge_reference = fdm.account_number AND fdm.reduction IS NOT NULL UNION SELECT DISTINCT(working_age_ctr_august.ctax_ref)
 FROM working_age_ctr_august
 WHERE working_age_ctr_august.ctax_ref NOT IN (SELECT fdm_mail_data_march.account_number FROM fdm_mail_data_march WHERE fdm_mail_data_march.reduction IS NOT NULL))
-	AND payment_method_code LIKE 'DD%'
-	AND ddd.direct_debit_taken > 0
-	AND ddd.diff_dd_gross_charge_value BETWEEN -5.00
-	AND 5.00 AND ddd.returned_dd_not_by_addacs = '#N/A'
-	AND ddd.addacs = '#N/A'
-	AND discount_1 IS NULL
-	AND exemption_class IS NULL;
+  AND payment_method_code LIKE 'DD%'
+  AND ddd.direct_debit_taken > 0
+  AND ddd.diff_dd_gross_charge_value BETWEEN -5.00 AND 5.00
+  AND ddd.returned_dd_not_by_addacs = '#N/A'
+  AND ddd.addacs = '#N/A'
+  AND discount_1 IS NULL
+  AND exemption_class IS NULL;
+```
+
+### Get all Non CTRS bills for Direct Debit Payers with 75% Liability
+
+<!-- DD PAYER 75% LIABILITY NO RET DD'S NO ADDACS 25% DISCOUNTS NO EXEMPTIONS NO CTR LAST DD PAYMENT +/- £5 75% OF GROSS DEBIT (20/21)  -->
+
+```sql
+SELECT
+  aws.mail_merge_reference AS mail_merge_reference,
+  CONCAT(aws.lead_liable_name, ' ', aws.lead_liable_lastname) AS name,
+  CONCAT(aws.for_addr1, ', ', aws.for_addr2, ', ', aws.for_addr3, ', ', aws.for_addr4, ', ', aws.for_postcode) AS forwarding_address,
+  CONCAT(aws.addr1, ', ', aws.addr2, ', ', aws.addr3, ', ', aws.addr4, ', ', aws.postcode) AS property_address,
+  aws.vo_band AS vo_band,
+  coalesce(fdm.additional_names, fdm_exemptions.additional_names) AS additional_names,
+  fdm.discount_1 AS discount_1,
+  fdm.discount_2 AS discount_2,
+  fdm.reduction AS reduction,
+  aws.payment_method_code AS payment_method_code,
+  fdm_exemptions.exemption_class AS exemption_class,
+  exemption_reasons.reason AS exemption_reason,
+  aws.property_ref as property_ref,
+  ddd."75_charge_12_instalments" as instalment
+FROM aws_academy_recovered_october AS aws
+LEFT JOIN fdm_mail_data_march AS fdm
+ON aws.mail_merge_reference = fdm.account_number
+LEFT JOIN fdm_mail_exemptions_march AS fdm_exemptions
+ON aws.mail_merge_reference = fdm_exemptions.account_number
+LEFT JOIN exemption_reasons
+ON exemption_reasons.class = fdm_exemptions.exemption_class
+LEFT JOIN direct_debit_discrepancies AS ddd
+ON ddd.mail_merge_reference = aws.mail_merge_reference
+WHERE aws.mail_merge_reference NOT IN (SELECT main.mail_merge_reference
+FROM aws_academy_recovered_october AS main
+JOIN fdm_mail_data_march AS fdm
+ON main.mail_merge_reference = fdm.account_number AND fdm.reduction IS NOT NULL UNION SELECT DISTINCT(working_age_ctr_august.ctax_ref)
+FROM working_age_ctr_august
+WHERE working_age_ctr_august.ctax_ref NOT IN (SELECT fdm_mail_data_march.account_number FROM fdm_mail_data_march WHERE fdm_mail_data_march.reduction IS NOT NULL))
+  AND payment_method_code LIKE 'DD%'
+  AND ddd.direct_debit_taken > 0
+  AND discount_1 IS NOT NULL
+  AND ddd.diff_dd_gross_charge_25_value BETWEEN -5.00 AND 5.00
+  AND ddd.returned_dd_not_by_addacs = '#N/A'
+  AND ddd.addacs = '#N/A'
+  AND exemption_class IS NULL;
+```
+
+### Get all Non CTRS bills for Cash Payers with 100% Liability
+
+<!-- CASH PAYER 100% LIABILITY - 10 INSTALLMENTS NO MENTION DEATH IN DD RECALLS/ADDACS NO DISCOUNTS NO EXEMPTIONS NO CTR LAST CASH PAYMENT +/- £5 GROSS DEBIT (20/21)  -->
+
+```sql
+SELECT
+  aws.mail_merge_reference AS mail_merge_reference,
+  CONCAT(aws.lead_liable_name, ' ', aws.lead_liable_lastname) AS name,
+  CONCAT(aws.for_addr1, ', ', aws.for_addr2, ', ', aws.for_addr3, ', ', aws.for_addr4, ', ', aws.for_postcode) AS forwarding_address,
+  CONCAT(aws.addr1, ', ', aws.addr2, ', ', aws.addr3, ', ', aws.addr4, ', ', aws.postcode) AS property_address,
+  aws.vo_band AS vo_band,
+  coalesce(fdm.additional_names, fdm_exemptions.additional_names) AS additional_names,
+  fdm.discount_1 AS discount_1,
+  fdm.discount_2 AS discount_2,
+  fdm.reduction AS reduction,
+  aws.payment_method_code AS payment_method_code,
+  fdm_exemptions.exemption_class AS exemption_class,
+  exemption_reasons.reason AS exemption_reason,
+  aws.property_ref as property_ref,
+  ddd."20_21_gross_debit_10_instalments" as instalment
+FROM aws_academy_recovered_october AS aws
+LEFT JOIN fdm_mail_data_march AS fdm
+ON aws.mail_merge_reference = fdm.account_number
+LEFT JOIN fdm_mail_exemptions_march AS fdm_exemptions
+ON aws.mail_merge_reference = fdm_exemptions.account_number
+LEFT JOIN exemption_reasons
+ON exemption_reasons.class = fdm_exemptions.exemption_class
+LEFT JOIN direct_debit_discrepancies AS ddd
+ON ddd.mail_merge_reference = aws.mail_merge_reference
+WHERE aws.mail_merge_reference NOT IN (SELECT main.mail_merge_reference
+FROM aws_academy_recovered_october AS main
+JOIN fdm_mail_data_march AS fdm
+ON main.mail_merge_reference = fdm.account_number AND fdm.reduction IS NOT NULL UNION SELECT DISTINCT(working_age_ctr_august.ctax_ref)
+FROM working_age_ctr_august
+WHERE working_age_ctr_august.ctax_ref NOT IN (SELECT fdm_mail_data_march.account_number FROM fdm_mail_data_march WHERE fdm_mail_data_march.reduction IS NOT NULL))
+  AND payment_method_code LIKE 'CASH%'
+  AND ddd.direct_debit_taken = 0
+  AND ddd.diff_cash_paid_gross_debit_10_instalments_value BETWEEN -5.00
+  AND 5.00 AND ddd.returned_dd_not_by_addacs = '#N/A'
+  AND ddd.addacs = '#N/A'
+  AND discount_1 IS NULL
+  AND exemption_class IS NULL;
 ```
