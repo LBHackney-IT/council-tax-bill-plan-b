@@ -48,7 +48,7 @@ $ aws sso login
 AWS CLI will then attempt to open your default browser and begin the login
 process for your AWS SSO account.
 
-2. Run the script to open a tunnel to the database in development
+2. Run the [script to open a tunnel to the database](./bin/open_db_tunnel) in development
 
 ```
 $ ./bin/open_db_tunnel development
