@@ -58,10 +58,10 @@ $ ./bin/open_db_tunnel development
 $ aws ssm get-parameter --output text --query Parameter.Value --name /council-tax-plan-b/development/database-master-password --with-decryption
 ```
 4. Using a SQL client, e.g. [Postico](https://eggerapps.at/postico/), [DataGrip](https://www.jetbrains.com/datagrip/), connect to the database with the following:
-  - Host: `localhost`
-  - Port: `5433`
-  - Password: (value from Step 3)
-  - Database: `council_tax`
+   - Host: `localhost`
+   - Port: `5433`
+   - Password: (value from Step 3)
+   - Database: `council_tax`
 
 ### Data extraction scripts
 
