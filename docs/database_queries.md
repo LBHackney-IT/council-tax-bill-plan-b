@@ -223,7 +223,10 @@ SELECT
   fdm_exemptions.exemption_class AS exemption_class,
   exemption_reasons.reason AS exemption_reason,
   aws.property_ref as property_ref,
-  ddd."75_charge_12_instalments" as instalment
+  ddd."75_charge_12_instalments" as instalment,
+  ROUND(aws.estimated_21_22_charge::numeric, 2) as estimated_21_22_charge_to_2dp,
+  ROUND(aws.estimated_21_22_charge::numeric - (ROUND(aws.estimated_21_22_charge::numeric / 12) * 11), 2) as first_instalment,
+  ROUND(aws.estimated_21_22_charge::numeric / 12) as other_instalments
 FROM aws_academy_recovered_october AS aws
 LEFT JOIN fdm_mail_data_march AS fdm
 ON aws.mail_merge_reference = fdm.account_number
