@@ -1,5 +1,20 @@
 # Database changelog
 
+## Thursday 14th January 2021
+
+### Added
+
+- Recently deceased -> `death_list`
+- Value columns for `direct_debit_discrepancies`:
+  - `diff_dd_gross_charge_value`
+  - `diff_dd_gross_charge_25_value`
+  - `diff_cash_paid_gross_debit_10_instalments_value`
+  - `diff_cash_paid_gross_25_off_debit_10_instalments_value`
+  - `75_charge_10_instalments_value`
+  - `20_21_gross_debit_10_instalments_value`
+  - `75_charge_12_instalments_value`
+  - `20_21_gross_debit_12_instalments_value`
+
 ## Tuesday 12th January 2021
 
 ### Added
