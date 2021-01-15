@@ -1,5 +1,12 @@
 # Database changelog
 
+## Tuesday 12th January 2021
+
+### Added
+
+- Temporary table of estimated reasons to exclude an account from being sent a bill -> `exclusion_reasons`
+- Temporary table to hold list of account ids that have been identified as having a exclusion reason associated with them -> `account_exclusions`
+
 ## Thursday 7th January 2021
 
 ### Added
@@ -36,10 +43,3 @@
 - Working age (August 2020) -> `working_age_ctr_august`
 - FDM mail data (March 2020) -> `fdm_mail_data_march`
 - FDM mail exemptions (March 2020) -> `fdm_mail_exemptions_march`
-
-## Tuesday 12th January 2021
-
-### Added
-
-- Temporary table of estimated reasons to exclude an account from being sent a bill -> exclusion_reasons
-- Temporary table to hold list of account ids that have been identified as having a exclusion reason associated with them -> account_exclusions
