@@ -1,5 +1,12 @@
 # Database changelog
 
+## Tuesday 19th January 2021
+
+### Added
+
+- Breakdown vo bands table -> contains amounts for Hackney, Adult Social Care & Greater London Authority per vo_band
+- `days_occupied`, `apportioned_charge` & `formatted_occupied_date` columns to the `aws_academy_recovered_october`
+
 ## Monday 18th January 2021
 
 ### Added
