@@ -1,5 +1,16 @@
 # Database changelog
 
+## Monday 18th January 2021
+
+### Added
+
+- All cash payments from April to December -> `ctax_cash_all_payments`
+- Total amount of cash payments -> `total_cash_payments`
+
+### Updated
+
+- Recently deceased with corresponding account number
+
 ## Thursday 14th January 2021
 
 ### Added
