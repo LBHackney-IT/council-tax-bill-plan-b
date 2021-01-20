@@ -545,3 +545,37 @@ FROM aws_academy_recovered_october AS main
 JOIN fdm_mail_data_march AS fdm
 ON main.mail_merge_reference = fdm.account_number AND fdm.reduction IS NOT NULL;
 ```
+
+### Managing Payment Methods when DD returned
+
+#### Confirm the account numbers of DDs returned in Direct debit discrepencies
+```sql
+SELECT * FROM aws_academy_recovered_october WHERE aws_academy_recovered_october.payment_method_code_updated <> aws_academy_recovered_october.payment_method_code;
+```
+
+#### Confirm the account numbers of DDs returned
+
+```sql
+SELECT aws.mail_merge_reference
+FROM aws_academy_recovered_october AS aws
+LEFT JOIN direct_debit_discrepancies AS ddd
+ON aws.mail_merge_reference = ddd.mail_merge_reference
+WHERE ddd.addacs <> '#N/A'
+	OR ddd.returned_dd_not_by_addacs <> '#N/A';
+  -- 2710 rows on 20/01/2021
+```
+
+
+#### Update main data in AWS recovered table with updated payment method
+```sql
+UPDATE aws_academy_recovered_october
+SET payment_method_code_updated = 'CASHM', payment_method_type_updated = '1'
+WHERE mail_merge_reference IN (
+	SELECT aws.mail_merge_reference
+	FROM aws_academy_recovered_october AS aws
+	LEFT JOIN direct_debit_discrepancies AS ddd
+	ON aws.mail_merge_reference = ddd.mail_merge_reference
+	WHERE ddd.addacs <> '#N/A'
+	OR ddd.returned_dd_not_by_addacs <> '#N/A'
+);
+```
