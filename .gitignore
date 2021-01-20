@@ -35,3 +35,9 @@ terraform.rc
 
 FDM-*
 SQL-*
+
+
+# Application ignored files
+.env
+app/venv
+__pycache__
