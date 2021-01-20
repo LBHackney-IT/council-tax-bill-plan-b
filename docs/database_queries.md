@@ -36,7 +36,12 @@ FROM aws_academy_recovered_october AS main
 JOIN fdm_mail_data_march AS fdm
 ON main.mail_merge_reference = fdm.account_number AND fdm.reduction IS NOT NULL UNION SELECT DISTINCT(working_age_ctr_august.ctax_ref)
 FROM working_age_ctr_august
-WHERE working_age_ctr_august.ctax_ref NOT IN (SELECT fdm_mail_data_march.account_number FROM fdm_mail_data_march WHERE fdm_mail_data_march.reduction IS NOT NULL));
+WHERE working_age_ctr_august.ctax_ref NOT IN (SELECT fdm_mail_data_march.account_number FROM fdm_mail_data_march WHERE fdm_mail_data_march.reduction IS NOT NULL))
+AND aws.mail_merge_reference NOT IN (
+  SELECT account_number FROM death_list
+  WHERE account_number IS NOT NULL
+  AND LOWER(account_number) <> 'not found'
+);
 ```
 
 ### Get all Non CTRS bills for Direct Debit Payers with 100% Liability
@@ -83,7 +88,12 @@ WHERE working_age_ctr_august.ctax_ref NOT IN (SELECT fdm_mail_data_march.account
   AND ddd.returned_dd_not_by_addacs = '#N/A'
   AND ddd.addacs = '#N/A'
   AND discount_1 IS NULL
-  AND exemption_class IS NULL;
+  AND exemption_class IS NULL
+  AND aws.mail_merge_reference NOT IN (
+    SELECT account_number FROM death_list
+    WHERE account_number IS NOT NULL
+    AND LOWER(account_number) <> 'not found'
+  );
 ```
 
 ### Get all Non CTRS bills for Direct Debit Payers with 75% Liability
@@ -130,7 +140,12 @@ WHERE working_age_ctr_august.ctax_ref NOT IN (SELECT fdm_mail_data_march.account
   AND ddd.diff_dd_gross_charge_25_value BETWEEN -5.00 AND 5.00
   AND ddd.returned_dd_not_by_addacs = '#N/A'
   AND ddd.addacs = '#N/A'
-  AND exemption_class IS NULL;
+  AND exemption_class IS NULL
+  AND aws.mail_merge_reference NOT IN (
+    SELECT account_number FROM death_list
+    WHERE account_number IS NOT NULL
+    AND LOWER(account_number) <> 'not found'
+  );
 ```
 
 ### Get all Non CTRS bills for Cash Payers with 100% Liability
@@ -177,7 +192,12 @@ WHERE working_age_ctr_august.ctax_ref NOT IN (SELECT fdm_mail_data_march.account
   AND ddd.returned_dd_not_by_addacs = '#N/A'
   AND ddd.addacs = '#N/A'
   AND discount_1 IS NULL
-  AND exemption_class IS NULL;
+  AND exemption_class IS NULL
+  AND aws.mail_merge_reference NOT IN (
+    SELECT account_number FROM death_list
+    WHERE account_number IS NOT NULL
+    AND LOWER(account_number) <> 'not found'
+  );
 ```
 
 ### Get all Non CTRS bills for Cash Payers with 75% Liability
@@ -224,7 +244,12 @@ WHERE working_age_ctr_august.ctax_ref NOT IN (SELECT fdm_mail_data_march.account
   AND ddd.returned_dd_not_by_addacs = '#N/A'
   AND ddd.addacs = '#N/A'
   AND discount_1 IS NOT NULL
-  AND exemption_class IS NULL;
+  AND exemption_class IS NULL
+  AND aws.mail_merge_reference NOT IN (
+    SELECT account_number FROM death_list
+    WHERE account_number IS NOT NULL
+    AND LOWER(account_number) <> 'not found'
+  );
 ```
 
 ### Get all Non CTRS bills for Cash Payers with 100% Liability that have paid off their annual bill
@@ -271,7 +296,12 @@ WHERE working_age_ctr_august.ctax_ref NOT IN (SELECT fdm_mail_data_march.account
   AND ddd.addacs = '#N/A'
   AND discount_1 IS NULL
   AND exemption_class IS NULL
-  AND (aws.calculated_20_21_charge_value - tot_cash_pay.total = 0.00);
+  AND (aws.calculated_20_21_charge_value - tot_cash_pay.total = 0.00)
+  AND aws.mail_merge_reference NOT IN (
+    SELECT account_number FROM death_list
+    WHERE account_number IS NOT NULL
+    AND LOWER(account_number) <> 'not found'
+  );
 ```
 
 ## Get all Non CTRS bills for Cash Payers with 75% Liability that have paid off their annual bill
@@ -316,7 +346,12 @@ WHERE working_age_ctr_august.ctax_ref NOT IN (SELECT fdm_mail_data_march.account
   AND ddd.addacs = '#N/A'
   AND discount_1 IS NOT NULL
   AND exemption_class IS NULL
-  AND (aws.calculated_20_21_75_charge - tot_cash_pay.total = 0.00);
+  AND (aws.calculated_20_21_75_charge - tot_cash_pay.total = 0.00)
+  AND aws.mail_merge_reference NOT IN (
+    SELECT account_number FROM death_list
+    WHERE account_number IS NOT NULL
+    AND LOWER(account_number) <> 'not found'
+  );
 ```
 
 ## Get cash payers with 100% liability that have moved in after 20th April 2020
