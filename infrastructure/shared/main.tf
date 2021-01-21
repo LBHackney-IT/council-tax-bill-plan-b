@@ -77,6 +77,8 @@ module "database" {
   apply_immediately               = true
   monitoring_interval             = 10
 
+  username = "council_tax_plan_b_admin"
+
   #db_parameter_group_name         = "default"
   #db_cluster_parameter_group_name = "default"
 
