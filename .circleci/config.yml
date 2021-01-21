@@ -66,6 +66,16 @@ jobs:
     steps:
       - terraform-init-then-apply:
           stage: "development"
+  assume-role-production:
+    executor: docker-python
+    steps:
+      - assume-role-and-persist-workspace:
+          aws-account: $AWS_ACCOUNT_PRODUCTION
+  terraform-init-and-apply-to-production:
+    executor: docker-terraform
+    steps:
+      - terraform-init-then-apply:
+          stage: "production"
 
 workflows:
   version: 2
@@ -76,3 +86,10 @@ workflows:
       - terraform-init-and-apply-to-development:
           requires:
             - assume-role-development
+  check-and-deploy-production:
+    jobs:
+      - assume-role-production:
+          context: api-assume-role-production-context
+      - terraform-init-and-apply-to-production:
+          requires:
+            - assume-role-production
