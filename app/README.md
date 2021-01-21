@@ -20,28 +20,32 @@ This is a simple Flask application to prepare and create data files for printing
 
 ## Running the application
 
-Create a virtualenv for the app.
+1. Change into the `app` directory
+```sh
+cd app
+```
+
+2. Create a virtualenv for the app
 ```sh
 python3 -m venv venv
 ```
 
-Activate the virtualenv
+3. Activate the virtualenv
 ```sh
 . venv/bin/activate
 ```
 
-Install Flask and dependencies.
+4. Install Flask and dependencies
 ```sh
 pip install -r requirements.txt
 ```
 
-Run the local server:
+5. Run the local server:
 ```sh
 flask run
 ```
 
-App should be visible at `http://127.0.0.1:5000/`
-
+App should be visible at [http://127.0.0.1:5000/](http://127.0.0.1:5000/).
 
 ## Production notes
 
