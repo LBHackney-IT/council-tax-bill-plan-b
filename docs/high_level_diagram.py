@@ -13,5 +13,7 @@ with Diagram("Hackney Council Tax Billing Plan B", show=True, direction="TB", gr
         Storage("FDM Exemption Print Files\n(March 2020)"),
         Storage("Working Age\n(August 2020)"),
         Storage("Valuation Office Bands\n(January 2021)"),
-        Storage("Direct Debit\nDiscrepancies")
+        Storage("Direct Debit\nDiscrepancies"),
+        Storage("Cash Payments"),
+        Storage("Recently Deceased")
     ]
