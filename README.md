@@ -17,7 +17,7 @@ phase of Council Tax Billing Plan B:
 - [AWS Command Line Interface (CLI)](https://aws.amazon.com/cli/) (v2) - to manage AWS RDS database
 - [Session Manager plugin for AWS CLI](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-working-with-install-plugin.html) (v2) - to connect to the database
 - [Terraform](https://www.terraform.io/) - to manage infrastructure e.g. database in environments
-- [Python](https://www.python.org/) (>= 3.6) - to extract data into CSV files from data sources
+- [Python](https://www.python.org/) (>= 3.6) - to extract data into CSV files from data sources and run Flask application
 - [Graphviz](https://graphviz.gitlab.io/download/) - to generate diagrams
 
 ### Set up connection to the database
@@ -76,6 +76,10 @@ $ aws ssm get-parameter --output text --query Parameter.Value --name /council-ta
 ### Data extraction scripts
 
 See [FDM Data Extractors](data_scripts/FDM_DATA_EXTRACTORS.md).
+
+### Python Flask application
+
+See [README for application](app/README.md).
 
 ### Infrastructure
 
