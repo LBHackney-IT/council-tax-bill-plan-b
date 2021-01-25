@@ -1,5 +1,15 @@
 # Hackney Council Tax Billing Plan B
 
+This repository contains a number of differing parts used for the Discovery
+phase of Council Tax Billing Plan B:
+
+- `/.circleci` - CI/CD pipeline configuration using CircleCI
+- `/app` - basic Python Flask application that was going to be used for generate data files for council tax billing
+- `/bin/open_db_tunnel` - Bash script to create a tunnel to the database in AWS
+- `/data_scripts` - Python scripts to extract relevant data from files
+- `/docs` - documentation mainly around our database
+- `/infrastructure` - Terraform to create AWS Aurora RDS instance
+
 ## Getting started
 
 ### Prerequisites
