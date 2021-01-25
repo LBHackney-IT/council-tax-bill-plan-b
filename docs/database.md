@@ -8,7 +8,4 @@
 
 ![Low-level diagram of database sources](./low_level_diagram.png)
 
-<!--
-This diagram was created using https://dbdiagram.io/, you can updated it at
-https://dbdiagram.io/d/5ffc728c80d742080a35d8ed.
--->
+This diagram was created using <https://dbdiagram.io/>

@@ -104,6 +104,16 @@ $ python high_level_diagram.py
 ```
 5. Commit the updated image and Python script
 
+### Low-level diagram
+
+The [Low-level diagram](./low_level_diagram.png) is generated using <https://dbdiagram.io/>.
+
+1. At [dbdiagram.io](https://dbdiagram.io/d), click on `import` and select an import type of PostgreSQL.
+2. Paste the [DDL](https://www.w3schools.in/mysql/ddl-dml-dcl/#DDL) (ie. data description language) of the updated database and click submit.
+3. Drag and drop the tables into the desired arrangement
+4. Click on `export` and select `export to PNG`
+5. Save new diagram in `/docs`
+
 ## Documentation
 
 - [Database](./docs/database.md) - overview of the database
