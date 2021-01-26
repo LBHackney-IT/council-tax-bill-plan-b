@@ -37,14 +37,14 @@ process for your AWS SSO account.
 It will then show you the accounts available to you.
 
 2. Select to use the `ProductionAPIs` account
-3. Enter a name for the CLI profile e.g. `hackney-dev`
+3. Enter a name for the CLI profile e.g. `hackney-ctb-prod`
 4. Verify the profile by listing AWS S3 buckets
 ```
-$ aws s3 ls --profile hackney-dev
+$ aws s3 ls --profile hackney-ctb-prod
 ```
 
 You can set a default AWS profile so you don't have to use `--profile` all the
-time by adding `export AWS_PROFILE=hackney-dev` to your `.zshrc` for example.
+time by adding `export AWS_PROFILE=hackney-ctb-prod` to your `.zshrc` for example.
 
 ## Usage
 
