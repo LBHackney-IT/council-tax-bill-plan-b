@@ -58,14 +58,14 @@ $ aws sso login
 AWS CLI will then attempt to open your default browser and begin the login
 process for your AWS SSO account.
 
-2. Run the [script to open a tunnel to the database](./bin/open_db_tunnel) in development
+2. Run the [script to open a tunnel to the database](./bin/open_db_tunnel) in production
 
 ```
-$ ./bin/open_db_tunnel development
+$ ./bin/open_db_tunnel production
 ```
 3. Retrieve the database password using AWS Systems Manager (SSM)
 ```
-$ aws ssm get-parameter --output text --query Parameter.Value --name /council-tax-plan-b/development/database-master-password --with-decryption
+$ aws ssm get-parameter --output text --query Parameter.Value --name /council-tax-plan-b/production/database-master-password --with-decryption
 ```
 4. Using a SQL client, e.g. [Postico](https://eggerapps.at/postico/), [DataGrip](https://www.jetbrains.com/datagrip/), connect to the database with the following:
    - Host: `localhost`
