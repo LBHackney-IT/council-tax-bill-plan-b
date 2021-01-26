@@ -4,7 +4,7 @@ Terraform is used to create the infrastructure required for this project. The
 main resource is an AWS Aurora PostgreSQL database instance which is created using the
 [AWS RDS Aurora Terraform module](https://registry.terraform.io/modules/terraform-aws-modules/rds-aurora/aws/latest).
 This is used to store data collated from different sources
-as described in our [high-level diagram](../docs/high_level_diagram.png).
+as described in our [high-level diagram](../docs/diagrams/high_level_diagram.png).
 
 To manage Terraform state, an AWS S3 bucket is used as the backend.
 
