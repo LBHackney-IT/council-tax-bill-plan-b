@@ -34,6 +34,8 @@ infrastructure/
 │   └── main.tf # resuable database resources
 ```
 
+### Declare AWS S3 bucket for Terraform state management
+
 1. Create a new directory within `/infrastructure`
 
 ```bash
@@ -82,16 +84,18 @@ resource "aws_s3_bucket" "terraform_state" {
 $ cd infrastructure/<environment>
 ```
 
+### Create AWS S3 bucket for Terraform state management
+
 Assuming you've set up the AWS `ProductionAPIs` profile, are signed in for
 CLI and running the latest version of Terraform:
 
-7. Initialise Terraform
+1. Initialise Terraform
 
 ```bash
 $ terraform init
 ```
 
-8. Run a plan of the infrastructure
+2. Run a plan of the infrastructure
 
 ```bash
 $ terraform plan
@@ -100,7 +104,7 @@ $ terraform plan
 The plan should only output that there will be 1 to add which will be the AWS S3
 bucket.
 
-8. Create the S3 bucket using Terraform
+3. Create the S3 bucket using Terraform
 
 ```bash
 $ terraform apply
@@ -109,15 +113,18 @@ $ terraform apply
 # aws s3 ls | grep "hackney-council-tax-bill"
 ```
 
-9. Uncomment the `backend` block (this means Terraform will manage state using the S3 bucket)
-10. Reinitialise Terraform
+4. Uncomment the `backend` block (this means Terraform will manage state using the S3 bucket)
+5. Reinitialise Terraform
 
 ```bash
 $ terraform init
 ```
 
-11. Enter `yes` when Terraform asks if you want to copy existing state to the new backend (this means the S3 bucket configuration can be changed using Terraform)
-12. Duplicate the `main.tf` file within `/infrastructure/production` directory into the new directory: `/infrastructure/<environment>`
+6. Enter `yes` when Terraform asks if you want to copy existing state to the new backend (this means the S3 bucket configuration can be changed using Terraform)
+
+### Declare resources for the database
+
+1. Duplicate the `main.tf` file within `/infrastructure/production` directory into the new directory: `/infrastructure/<environment>`
 
 ```bash
 # Replace <environment> with the name of the environment
@@ -126,11 +133,13 @@ $ cp infrastructure/production/main.tf infrastructure/<environment>/main.tf
 
 This will declare all the resources required to set up the database by defining a `module` with `./shared` as the source. See [./shared/main.tf](./shared/main.tf) for the exact resources created.
 
-13. Update the values for each variable used in the `module` in `infrastructure/<environment>/main.tf`
+2. Update the values for each variable used in the `module` in `infrastructure/<environment>/main.tf`
+
+### Update CI pipeline for new environment
 
 The CI pipeline needs to be updated to run Terraform on the new environment.
 
-14. Add two new `jobs` to `.circleci/.config.yml` to run Terraform on the new environment by replicating the ones already declared for `production` but changing `production` and `PRODUCTION` to the name of the environment
+1. Add two new `jobs` to `.circleci/.config.yml` to run Terraform on the new environment by replicating the ones already declared for `production` but changing `production` and `PRODUCTION` to the name of the environment
 
 ```yaml
 # Replace <environment> and <ENVIRONMENT> with the name of the environment
@@ -159,8 +168,8 @@ jobs:
 
 > **Tip:** Validate the CircleCI configuration by using [CircleCI CLI](https://circleci.com/docs/2.0/local-cli-getting-started/) and running `circleci config validate .circleci/config.yml`.
 
-15. Add, commit and push files to GitHub
-16. [View progress on CircleCI](https://app.circleci.com/pipelines/github/LBHackney-IT/council-tax-bill-plan-b?branch=master)
+2. Add, commit and push files to GitHub
+3. [View progress on CircleCI](https://app.circleci.com/pipelines/github/LBHackney-IT/council-tax-bill-plan-b?branch=master)
 
 This will trigger CircleCI to create the database and other resources necessary
 using Terraform which may take a while (around 15 minutes).
