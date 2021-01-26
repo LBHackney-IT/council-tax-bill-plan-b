@@ -506,29 +506,6 @@ WHERE aws_academy_recovered_october.mail_merge_reference = fdm_mail_exemptions_m
 
 -- Returns 0 records.
 ```
-
-### Update reasons for exclusion join table based on the result of a main data and supplementary data query
-
-Replace <reason_id> with the actual reason id from reasons table. Reason should exist in reasons table to provide that <reason_id>
-
-```sql
-INSERT INTO account_exclusions (account_id, reason_id)
-SELECT main.id, <reason_id>
-FROM ctax_billing_dumb_v1 AS main
-JOIN fdm_mail_data AS fdm
-ON main.mail_merge_reference = fdm.account_number AND fdm.discount_1 IS NOT NULL;
-```
-
-### Get all accounts without a reason to exclude
-
-```sql
-SELECT main.id, main.mail_merge_reference, account_exclusions.exclusion_reasons_id
-FROM aws_academy_recovered_october AS main
-LEFT JOIN account_exclusions
-ON main.id = account_exclusions.aws_academy_recovered_october_id
-WHERE account_exclusions.exclusion_reasons_id IS NULL;
-```
-
 ### Get all working age reductions not in FDM mail data
 
 ```sql
