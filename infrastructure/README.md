@@ -41,7 +41,7 @@ infrastructure/
 $ mkdir infrastructure/<environment>
 ```
 
-2. Duplicate the `state-persistence.tf` file within `/infrastructure/production` directory into the new directory: `/infrastructe/<environment>`
+2. Duplicate the `state-persistence.tf` file within `/infrastructure/production` directory into the new directory: `/infrastructure/<environment>`
 
 ```bash
 # Replace <environment> with the name of the environment
@@ -67,7 +67,7 @@ terraform {
 
 ```terraform
 resource "aws_s3_bucket" "terraform_state" {
-  bucket = "hackney-council-tax-bill-plan-b-terraform-state-production"
+  bucket = "hackney-council-tax-bill-plan-b-terraform-state-production" # Update production with name of environment
   acl    = "private"
 
   ...
@@ -130,7 +130,7 @@ This will declare all the resources required to set up the database by defining 
 
 The CI pipeline needs to be updated to run Terraform on the new environment.
 
-14. Add two new `jobs` to `.circleci/.config.yml` to run Terraform on the new environment by replicating the ones already declare for `production` but changing `production` and `PRODUCTION` to the name of the environment
+14. Add two new `jobs` to `.circleci/.config.yml` to run Terraform on the new environment by replicating the ones already declared for `production` but changing `production` and `PRODUCTION` to the name of the environment
 
 ```yaml
 # Replace <environment> and <ENVIRONMENT> with the name of the environment
