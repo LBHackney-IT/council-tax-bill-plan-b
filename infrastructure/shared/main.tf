@@ -1,25 +1,25 @@
 variable "stage" {
-  type = string
+  type        = string
   description = "The stage of the pipline: devscratch, development, staging, production"
 }
 
 variable "api_vpc_id" {
-  type = string
+  type        = string
   description = "The VPC ID"
 }
 
 variable "api_vpc_cidr" {
-  type = string
+  type        = string
   description = "The cidr block for the vpc"
 }
 
 variable "api_subnets" {
-  type = list(string)
+  type        = list(string)
   description = "A list of subnet ids for the database to attach to"
 }
 
 variable "bastion_security_group" {
-  type = string
+  type        = string
   description = "The id of the bastion security group for access to the database"
 }
 
@@ -61,21 +61,21 @@ module "database" {
   source  = "terraform-aws-modules/rds-aurora/aws"
   version = "~> 2.0"
 
-  name                            = "council-tax-bill-plan-b"
+  name = "council-tax-bill-plan-b"
 
-  engine                          = "aurora-postgresql"
-  engine_version                  = "11.9"
+  engine         = "aurora-postgresql"
+  engine_version = "11.9"
 
-  vpc_id                          = var.api_vpc_id
-  subnets                         = var.api_subnets
+  vpc_id  = var.api_vpc_id
+  subnets = var.api_subnets
 
-  replica_count                   = 1
-  allowed_security_groups         = [aws_security_group.council_tax_bill_plan_b.id]
-  allowed_cidr_blocks             = [var.api_vpc_cidr]
-  instance_type                   = "db.t3.medium"
-  storage_encrypted               = true
-  apply_immediately               = true
-  monitoring_interval             = 10
+  replica_count           = 1
+  allowed_security_groups = [aws_security_group.council_tax_bill_plan_b.id]
+  allowed_cidr_blocks     = [var.api_vpc_cidr]
+  instance_type           = "db.t3.medium"
+  storage_encrypted       = true
+  apply_immediately       = true
+  monitoring_interval     = 10
 
   username = "council_tax_plan_b_admin"
 
@@ -86,39 +86,42 @@ module "database" {
 }
 
 resource "aws_ssm_parameter" "database_host" {
-  name = "/council-tax-plan-b/${var.stage}/database-host"
-  type = "String"
+  name  = "/council-tax-plan-b/${var.stage}/database-host"
+  type  = "String"
   value = module.database.this_rds_cluster_endpoint
 }
 
 resource "aws_ssm_parameter" "database_port" {
-  name = "/council-tax-plan-b/${var.stage}/database-port"
-  type = "String"
+  name  = "/council-tax-plan-b/${var.stage}/database-port"
+  type  = "String"
   value = module.database.this_rds_cluster_port
 }
 
 resource "aws_ssm_parameter" "database_master_username" {
-  name = "/council-tax-plan-b/${var.stage}/database-master-username"
-  type = "String"
+  name  = "/council-tax-plan-b/${var.stage}/database-master-username"
+  type  = "String"
   value = module.database.this_rds_cluster_master_username
 }
 
 resource "aws_ssm_parameter" "database_master_password" {
-  name = "/council-tax-plan-b/${var.stage}/database-master-password"
-  type = "SecureString"
+  name  = "/council-tax-plan-b/${var.stage}/database-master-password"
+  type  = "SecureString"
   value = module.database.this_rds_cluster_master_password
 }
 
 output "database_host" {
   value = module.database.this_rds_cluster_endpoint
 }
+
 output "database_port" {
   value = module.database.this_rds_cluster_port
 }
+
 output "database_username" {
   value = module.database.this_rds_cluster_master_username
 }
+
 output "database_password" {
-  value = module.database.this_rds_cluster_master_password
+  value     = module.database.this_rds_cluster_master_password
   sensitive = true
 }

@@ -7,11 +7,11 @@ terraform {
   }
 
   backend "s3" {
-     region     = "eu-west-2"
-     key        = "tf-remote-state"
-     bucket     = "hackney-council-tax-bill-plan-b-terraform-state-production"
-     encrypt    = true
-   }
+    region  = "eu-west-2"
+    key     = "tf-remote-state"
+    bucket  = "hackney-council-tax-bill-plan-b-terraform-state-production"
+    encrypt = true
+  }
 }
 
 provider "aws" {
@@ -20,7 +20,7 @@ provider "aws" {
 
 resource "aws_s3_bucket" "terraform_state" {
   bucket = "hackney-council-tax-bill-plan-b-terraform-state-production"
-  acl = "private"
+  acl    = "private"
 
   versioning {
     enabled = true
