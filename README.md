@@ -19,7 +19,7 @@ phase of Council Tax Billing Plan B:
   - [Connecting to the database](#connecting-to-the-database)
   - [Data extraction scripts](#data-extraction-scripts)
   - [Python Flask application](#python-flask-application)
-  - [Infrastructure](#data-extraction-scripts)
+  - [Infrastructure](#infrastructure)
   - [High-level diagram](#high-level-diagram)
   - [Low-level diagram](#low-level-diagram)
 - [Documentation](#documentation)
