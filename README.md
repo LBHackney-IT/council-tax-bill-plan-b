@@ -71,7 +71,7 @@ $ aws ssm get-parameter --output text --query Parameter.Value --name /council-ta
    - Host: `localhost`
    - Port: `5433`
    - Password: (value from Step 3)
-   - Database: `council_tax`
+   - Database: `council_tax_production`
 
 ### Data extraction scripts
 
