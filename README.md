@@ -37,14 +37,14 @@ process for your AWS SSO account.
 It will then show you the accounts available to you.
 
 2. Select to use the `ProductionAPIs` account
-3. Enter a name for the CLI profile e.g. `hackney-dev`
+3. Enter a name for the CLI profile e.g. `hackney-ctb-prod`
 4. Verify the profile by listing AWS S3 buckets
 ```
-$ aws s3 ls --profile hackney-dev
+$ aws s3 ls --profile hackney-ctb-prod
 ```
 
 You can set a default AWS profile so you don't have to use `--profile` all the
-time by adding `export AWS_PROFILE=hackney-dev` to your `.zshrc` for example.
+time by adding `export AWS_PROFILE=hackney-ctb-prod` to your `.zshrc` for example.
 
 ## Usage
 
@@ -58,24 +58,24 @@ $ aws sso login
 AWS CLI will then attempt to open your default browser and begin the login
 process for your AWS SSO account.
 
-2. Run the [script to open a tunnel to the database](./bin/open_db_tunnel) in development
+2. Run the [script to open a tunnel to the database](./bin/open_db_tunnel) in production
 
 ```
-$ ./bin/open_db_tunnel development
+$ ./bin/open_db_tunnel production
 ```
 3. Retrieve the database password using AWS Systems Manager (SSM)
 ```
-$ aws ssm get-parameter --output text --query Parameter.Value --name /council-tax-plan-b/development/database-master-password --with-decryption
+$ aws ssm get-parameter --output text --query Parameter.Value --name /council-tax-plan-b/production/database-master-password --with-decryption
 ```
 4. Using a SQL client, e.g. [Postico](https://eggerapps.at/postico/), [DataGrip](https://www.jetbrains.com/datagrip/), connect to the database with the following:
    - Host: `localhost`
    - Port: `5433`
    - Password: (value from Step 3)
-   - Database: `council_tax`
+   - Database: `council_tax_production`
 
 ### Data extraction scripts
 
-See [FDM Data Extractors](data_scripts/FDM_DATA_EXTRACTORS.md).
+See [Data Extractors](data_scripts/README.md).
 
 ### Python Flask application
 

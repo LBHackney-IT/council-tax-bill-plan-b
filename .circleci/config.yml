@@ -56,16 +56,6 @@ commands:
             terraform apply -auto-approve
 
 jobs:
-  assume-role-development:
-    executor: docker-python
-    steps:
-      - assume-role-and-persist-workspace:
-          aws-account: $AWS_ACCOUNT_DEVELOPMENT
-  terraform-init-and-apply-to-development:
-    executor: docker-terraform
-    steps:
-      - terraform-init-then-apply:
-          stage: "development"
   assume-role-production:
     executor: docker-python
     steps:
@@ -79,13 +69,6 @@ jobs:
 
 workflows:
   version: 2
-  check-and-deploy-development:
-    jobs:
-      - assume-role-development:
-          context: api-assume-role-development-context
-      - terraform-init-and-apply-to-development:
-          requires:
-            - assume-role-development
   check-and-deploy-production:
     jobs:
       - assume-role-production:

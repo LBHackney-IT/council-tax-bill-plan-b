@@ -1,10 +1,11 @@
-# FDM Data Extractors
+# Data Extractors
 
-We've currently have 3 data extractor scripts for FDM print files:
+We've currently have 4 data extractor scripts:
 
 - `/data_scripts/fdm_extractor.py` - to extract data from FDM bill print files
 - `/data_scripts/fdm_exemption_reason_extractor.py` - to extract exemption reasons from FDM exemption print files
 - `/data_scripts/fdm_premium_extractor.py` - to extract the premium from FDM bill print files
+- `/data_scripts/death_reports_pdf_extractor.py` - to extract a list of people who have recently died from a PDF
 
 ## FDM extractor
 
@@ -83,7 +84,10 @@ $ python /data_scripts/fdm_premium_extractor.py
 
 ## Death Reports PDF extractor
 
-This script takes the data provided on people who have died recently and parses the PDFs provided into a pipe (|) separated CSV file.  Pipe (|) was chosen as inconsistency in addresses with and without commas makes it easier to just use a pipe (|).
+This script takes the data provided on people who have died recently and parses
+the PDFs provided into a pipe (|) separated CSV file.  Pipe (|) was chosen as
+inconsistency in addresses with and without commas makes it easier to just use a
+pipe (|).
 
 ### Usage
 
@@ -94,4 +98,9 @@ $ python /data_scripts/death_reports_pdf_extractor.py "/Full/Path/To/data.pdf" "
 
 ## Note
 
-We're not proud of these scripts, it's brittle, untested and basically cobbled together using trial and error. Improvements could be made by mapping data to a dict instead of appending directly to the `record` however this wasn't straight forward for a couple reasons but should be possible. Ideally convert to a command line tool to run the data extracts, but with luck this is going to be a one time use bit of code.
+We're not proud of these scripts, they're brittle, untested and basically
+cobbled together using trial and error. Improvements could be made by mapping
+data to a dict instead of appending directly to the `record` however this wasn't
+straight forward for a couple reasons but should be possible. Ideally convert to
+a command-line tool to run the data extracts, but with luck this is going to be
+a one time use bit of code.
