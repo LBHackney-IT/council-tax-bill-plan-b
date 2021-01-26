@@ -36,7 +36,7 @@ process for your AWS SSO account.
 
 It will then show you the accounts available to you.
 
-2. Select to use the `DevelopmentAPIs` account
+2. Select to use the `ProductionAPIs` account
 3. Enter a name for the CLI profile e.g. `hackney-dev`
 4. Verify the profile by listing AWS S3 buckets
 ```
