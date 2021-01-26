@@ -10,6 +10,20 @@ phase of Council Tax Billing Plan B:
 - `/docs` - documentation around our database, data diagrams & bill templates
 - `/infrastructure` - Terraform to create AWS Aurora RDS instance
 
+## Table of contents
+
+- [Getting started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Set up connection to the database](#set-up-connection-to-the-database)
+- [Usage](#usage)
+  - [Connecting to the database](#connecting-to-the-database)
+  - [Data extraction scripts](#data-extraction-scripts)
+  - [Python Flask application](#data-extraction-scripts)
+  - [Infrastructure](#data-extraction-scripts)
+  - [High-level diagram](#high-level-diagram)
+  - [Low-level diagram](#low-level-diagram)
+- [Documentation](#documentation)
+
 ## Getting started
 
 ### Prerequisites
