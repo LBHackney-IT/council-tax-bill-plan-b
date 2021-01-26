@@ -83,7 +83,7 @@ See [README for application](app/README.md).
 
 ### Infrastructure
 
-*TODO*
+See [README for infrastructure](infrastructure/README.md).
 
 ### High-level diagram
 
