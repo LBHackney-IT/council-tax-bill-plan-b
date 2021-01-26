@@ -7,7 +7,7 @@ phase of Council Tax Billing Plan B:
 - `/app` - basic Python Flask application that was going to be used for generate data files for council tax billing
 - `/bin/open_db_tunnel` - Bash script to create a tunnel to the database in AWS
 - `/data_scripts` - Python scripts to extract relevant data from files
-- `/docs` - documentation mainly around our database
+- `/docs` - documentation around our database, data diagrams & bill templates
 - `/infrastructure` - Terraform to create AWS Aurora RDS instance
 
 ## Getting started
@@ -87,16 +87,16 @@ See [README for application](app/README.md).
 
 ### High-level diagram
 
-The [high-level diagram](./docs/high_level_diagram.png) is generated using [Diagrams by mingrammer](https://diagrams.mingrammer.com/) which allows you to create diagrams by writing Python code.
+The [high-level diagram](./docs/diagrams/high_level_diagram.png) is generated using [Diagrams by mingrammer](https://diagrams.mingrammer.com/) which allows you to create diagrams by writing Python code.
 
 1. Install diagrams
 ```bash
 $ pip install diagrams
 ```
-2. Update [high_level_diagram.py](./docs/high_level_diagram.py) (see [Diagrams' documentation](https://diagrams.mingrammer.com/docs/guides/diagram))
-3. Change directory into `/docs` so the new image replaces the current one
+2. Update [high-level diagram](./docs/diagrams/high_level_diagram.png) (see [Diagrams' documentation](https://diagrams.mingrammer.com/docs/guides/diagram))
+3. Change directory into `/docs/diagrams` so the new image replaces the current one
 ```bash
-$ cd docs
+$ cd docs/diagrams
 ```
 4. Run the script to generate the diagram
 ```bash
@@ -106,16 +106,16 @@ $ python high_level_diagram.py
 
 ### Low-level diagram
 
-The [Low-level diagram](./low_level_diagram.png) is generated using <https://dbdiagram.io/>.
+The [Low-level diagram](./docs/diagrams/low_level_diagram.png) is generated using <https://dbdiagram.io/>.
 
 1. At [dbdiagram.io](https://dbdiagram.io/d), click on `import` and select an import type of PostgreSQL.
 2. Paste the [DDL](https://www.w3schools.in/mysql/ddl-dml-dcl/#DDL) (ie. data description language) of the updated database and click submit.
 3. Drag and drop the tables into the desired arrangement
 4. Click on `export` and select `export to PNG`
-5. Save new diagram in `/docs`
+5. Save new diagram in `/docs/diagrams`
 
 ## Documentation
 
-- [Database](./docs/database.md) - overview of the database
-- [Database changelog](./docs/database_changelog.md) - a log of changes made to our database
-- [Database queries](./docs/database_queries.md) - SQL queries used to extract data
+- [Database](./docs/database/database.md) - overview of the database
+- [Database changelog](./docs/database/database_changelog.md) - a log of changes made to our database
+- [Database queries](./docs/database/database_queries.md) - SQL queries used to extract data

@@ -56,7 +56,7 @@
 
 ### Updated
 
-- FDM mail data (March 2020) with premiums extracted from the FDM data files (DD, cash bills and props) using a new [data extractor script](../data_scripts/fdm_premium_extractor.py)
+- FDM mail data (March 2020) with premiums extracted from the FDM data files (DD, cash bills and props) using a new [data extractor script](../../data_scripts/fdm_premium_extractor.py)
 
 ## Tuesday 5th January 2021
 
