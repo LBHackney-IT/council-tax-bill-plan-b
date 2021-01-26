@@ -18,19 +18,19 @@ provider "aws" {
   region = "eu-west-2"
 }
 
-# resource "aws_s3_bucket" "terraform_state" {
-#   bucket = "hackney-council-tax-bill-plan-b-terraform-state-production"
-#   acl = "private"
+resource "aws_s3_bucket" "terraform_state" {
+  bucket = "hackney-council-tax-bill-plan-b-terraform-state-production"
+  acl = "private"
 
-#   versioning {
-#     enabled = true
-#   }
+  versioning {
+    enabled = true
+  }
 
-#   server_side_encryption_configuration {
-#     rule {
-#       apply_server_side_encryption_by_default {
-#         sse_algorithm = "AES256"
-#       }
-#     }
-#   }
-# }
+  server_side_encryption_configuration {
+    rule {
+      apply_server_side_encryption_by_default {
+        sse_algorithm = "AES256"
+      }
+    }
+  }
+}

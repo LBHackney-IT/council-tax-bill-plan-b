@@ -53,6 +53,7 @@ commands:
           name: Apply infrastructure changes
           command: |
             cd infrastructure/<<parameters.stage>>
+            terraform import aws_s3_bucket.terraform_state hackney-council-tax-bill-plan-b-terraform-state-production
             terraform apply -auto-approve
 
 jobs:
