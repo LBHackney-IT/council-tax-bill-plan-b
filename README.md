@@ -89,7 +89,7 @@ $ aws ssm get-parameter --output text --query Parameter.Value --name /council-ta
 
 ### Data extraction scripts
 
-See [Data Extractors](data_scripts/README.md).
+See [README for data scripts](data_scripts/README.md).
 
 ### Python Flask application
 
