@@ -1,5 +1,15 @@
 # Database
 
+A database is used to store data obtained from different sources (see
+[Data Sources](#data-sources) section below for a detailed description). It was mainly
+accessed using a SQL client like [Postico](https://eggerapps.at/postico/) and
+[DataGrip](https://www.jetbrains.com/datagrip/). As a result, we've heavily
+documented the data in it, the changes made to it and SQL queries we used to
+retrieve data.
+
+- [Data Queries](./database_queries.md)
+- [Data Changelog](./database_changelog.md)
+
 ## Data Sources
 
 | Name | Description |
