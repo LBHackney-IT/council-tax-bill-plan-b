@@ -130,6 +130,6 @@ The [Low-level diagram](./docs/diagrams/low_level_diagram.png) is generated usin
 
 ## Documentation
 
-- [Database](./docs/database/database.md) - overview of the database
+- [Database](./docs/database/README.md) - overview of the database
 - [Database changelog](./docs/database/database_changelog.md) - a log of changes made to our database
 - [Database queries](./docs/database/database_queries.md) - SQL queries used to extract data
