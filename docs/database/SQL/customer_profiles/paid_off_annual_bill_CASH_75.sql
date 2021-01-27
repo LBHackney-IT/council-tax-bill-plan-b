@@ -47,8 +47,8 @@ WHERE
         AND ddd.direct_debit_taken = 0
         AND NOT (ddd.diff_cash_paid_gross_25_off_debit_10_instalments_value BETWEEN - 5.00
             AND 5.00)
-    AND ddd.returned_dd_not_by_addacs = '#N/A'
-    AND ddd.addacs = '#N/A'
+    AND ddd.returned_dd_not_by_addacs IS NULL
+    AND ddd.addacs IS NULL
     AND discount_1 IS NOT NULL
     AND exemption_class IS NULL
     AND (aws.calculated_20_21_75_charge - tot_cash_pay.total = 0.00)
@@ -60,4 +60,3 @@ WHERE
         WHERE
             account_number IS NOT NULL
             AND LOWER(account_number) <> 'not found');
-

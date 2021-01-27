@@ -49,8 +49,8 @@ WHERE
         AND ddd.direct_debit_taken > 0
         AND ddd.diff_dd_gross_charge_value BETWEEN - 5.00
         AND 5.00
-        AND ddd.returned_dd_not_by_addacs = '#N/A'
-        AND ddd.addacs = '#N/A'
+        AND ddd.returned_dd_not_by_addacs IS NOT NULL
+        AND ddd.addacs IS NOT NULL
         AND discount_1 IS NULL
         AND exemption_class IS NULL
         AND aws.mail_merge_reference NOT IN (
@@ -61,4 +61,3 @@ WHERE
             WHERE
                 account_number IS NOT NULL
                 AND LOWER(account_number) <> 'not found');
-
