@@ -30,7 +30,7 @@ WHERE
                 WHERE
                     fdm_mail_data_march.reduction IS NOT NULL))
         AND payment_method_code LIKE 'CASH%'
-        AND ddd.direct_debit_taken = 0
+        AND ddd.direct_debit_taken = 0 OR ddd.direct_debit_taken IS NULL
         AND ddd.diff_cash_paid_gross_debit_10_instalments_value BETWEEN - 5.00
         AND 5.00
         AND ddd.returned_dd_not_by_addacs IS NULL

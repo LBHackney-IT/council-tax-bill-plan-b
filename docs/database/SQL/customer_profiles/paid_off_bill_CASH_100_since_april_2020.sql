@@ -49,7 +49,7 @@ WHERE
                 WHERE
                     fdm_mail_data_march.reduction IS NOT NULL))
         AND payment_method_code LIKE 'CASH%'
-        AND ddd.direct_debit_taken = 0
+        AND ddd.direct_debit_taken = 0 OR ddd.direct_debit_taken IS NULL
         AND discount_1 IS NULL
         AND exemption_class IS NULL
         AND formatted_occupied_date >= '2020-04-01'
