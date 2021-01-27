@@ -1,15 +1,5 @@
 # Database
 
-## High-level diagram of data sources
-
-![High-level diagram of database sources](../diagrams/high_level_diagram.png)
-
-## Low-level diagram of data sources
-
-![Low-level diagram of database sources](../diagrams/low_level_diagram.png)
-
-This diagram was created using <https://dbdiagram.io/>
-
 ## Data Sources
 
 | Name | Description |
@@ -22,3 +12,13 @@ This diagram was created using <https://dbdiagram.io/>
 | **Direct Debit Discrepancies** | Data on accounts, liability charge, instalments and any information from [addacs](https://www.bacs.co.uk/Services/bacsschemes/directdebit/services/pages/addacs.aspx). |
 | **Cash Payments** | Data on accounts, net cash payment per month (from April to December) and other cash payment-related information. |
 | **Recently Deceased** | Data on account holders who had passed away between December 2020 - January 2021. |
+
+## High-level diagram of data sources
+
+![High-level diagram of database sources](../diagrams/high_level_diagram.png)
+
+## Low-level diagram of data sources
+
+![Low-level diagram of database sources](../diagrams/low_level_diagram.png)
+
+This diagram was created using <https://dbdiagram.io/>
