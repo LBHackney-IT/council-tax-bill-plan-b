@@ -7,8 +7,8 @@ accessed using a SQL client like [Postico](https://eggerapps.at/postico/) and
 documented the data in it, the changes made to it and SQL queries we used to
 retrieve data.
 
-- [Data Queries](./database_queries.md)
-- [Data Changelog](./database_changelog.md)
+- [Database Queries](./database_queries.md)
+- [Database Changelog](./database_changelog.md)
 
 ## Data Sources
 
