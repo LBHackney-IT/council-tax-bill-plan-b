@@ -33,8 +33,8 @@ WHERE
         AND ddd.direct_debit_taken = 0 OR ddd.direct_debit_taken IS NULL
         AND ddd.diff_cash_paid_gross_25_off_debit_10_instalments_value BETWEEN - 5.00
         AND 5.00
-        AND ddd.returned_dd_not_by_addacs IS NULL
-        AND ddd.addacs IS NULL
+        AND ddd.returned_dd_not_by_addacs IS NULL OR ddd.returned_dd_not_by_addacs = '#N/A'
+        AND ddd.addacs IS NULL OR ddd.addacs = '#N/A'
         AND discount_1 IS NOT NULL
         AND exemption_class IS NULL
         AND aws.mail_merge_reference NOT IN (
