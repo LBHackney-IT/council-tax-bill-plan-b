@@ -31,7 +31,7 @@ infrastructure/
 │   ├── main.tf
 │   └── state-persistence.tf
 ├── shared/
-│   └── main.tf # resuable database resources
+│   └── main.tf # reusable database resources
 ```
 
 ### Declare AWS S3 bucket for Terraform state management
@@ -86,8 +86,7 @@ $ cd infrastructure/<environment>
 
 ### Create AWS S3 bucket for Terraform state management
 
-Assuming you've set up the AWS `ProductionAPIs` profile, are signed in for
-CLI and running the latest version of Terraform:
+Make sure you've signed into the AWS CLI of the AWS environment you want the database to be in e.g. `ProductionAPIs` , you are using the relevant AWS profile in your terminal and running the latest version of Terraform:
 
 1. Initialise Terraform
 
