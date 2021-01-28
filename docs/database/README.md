@@ -9,6 +9,7 @@ retrieve data.
 
 - [Database Queries](./database_queries.md)
 - [Database Changelog](./database_changelog.md)
+- [Uploading DD data](./uploading_dd_data.md)
 
 ## Data Sources
 
