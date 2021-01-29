@@ -9,6 +9,8 @@ retrieve data.
 
 - [Database queries](./database_queries.md)
 - [Database changelog](./database_changelog.md)
+- [Updating the direct debit data](uploading_dd_data.md)
+- [Updating the Valuation Office data](uploading_vo_data.md)
 
 ## Data Sources
 
@@ -32,7 +34,3 @@ retrieve data.
 ![Low-level diagram of database sources](../diagrams/low_level_diagram.png)
 
 This diagram was created using <https://dbdiagram.io/>
-
-## Updating the Direct debit and Valuation Office data
-
-See [uploading_dd_data.md](uploading_dd_data.md) and [uploading_vo_data.md](uploading_vo_data.md).
