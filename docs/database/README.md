@@ -7,9 +7,8 @@ accessed using a SQL client like [Postico](https://eggerapps.at/postico/) and
 documented the data in it, the changes made to it and SQL queries we used to
 retrieve data.
 
-- [Database Queries](./database_queries.md)
-- [Database Changelog](./database_changelog.md)
-- [Uploading direct debit data](./uploading_dd_data.md)
+- [Database queries](./database_queries.md)
+- [Database changelog](./database_changelog.md)
 
 ## Data Sources
 
